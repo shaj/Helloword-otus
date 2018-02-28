@@ -11,6 +11,7 @@ script:
   - cmake --build .
   - cmake --build . --target test
   - cmake --build . --target package
+  - echo "test"
 deploy:
   provider: script
   skip_cleanup: true
