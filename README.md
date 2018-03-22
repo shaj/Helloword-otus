@@ -9,4 +9,5 @@ sudo update-alternatives --config gcc
 
 --- Добавил ssh
 
+- Проверка ssh
 
