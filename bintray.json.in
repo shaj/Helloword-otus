@@ -1,0 +1,36 @@
+{
+    "package": {
+        "name": "@CPACK_PACKAGE_NAME@",
+        "repo": "master",
+        "subject": "myBintrayUser",
+        "desc": "I was pushed completely automatically",
+        "website_url": "www.jfrog.com",
+        "issue_tracker_url": "https://github.com/shaj/Helloworld-otus/issues",
+        "vcs_url": "https://github.com/shaj/Helloworld-otus.git",
+        "github_use_tag_release_notes": true,
+        "github_release_notes_file": "@CPACK_PACKAGE_DESCRIPTION_FILE@",
+        "licenses": ["MIT"],
+        "labels": ["hello", "world"],
+        "public_download_numbers": false,
+        "public_stats": false,
+    },
+
+    "version": {
+        "name": "@CPACK_PACKAGE_VERSION@",
+        "desc": "",
+        "released": "2018-05-16",
+        "vcs_tag": "0.5",
+        "gpgSign": false
+    },
+
+    "files":
+    [
+        {"includePattern": "build/bin/(.*\.deb)", "uploadPattern": "pool/main/m/mypackage/$1",
+        "matrixParams": {
+            "deb_distribution": "trusty",
+            "deb_component": "main",
+            "deb_architecture": "amd64"}
+        }
+    ],
+    "publish": true
+}

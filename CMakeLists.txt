@@ -47,17 +47,15 @@ set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 
 set(CPACK_PACKAGE_CONTACT kolobrod2002@yandex.ru)
 
-set(ENV{PROJECT_VERSION_BUILD}
-  "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
-
-
-set(ENV{CT} "0.0.777" PARENT_SCOPE)
-message("Environment variable CT: $ENV{CT}")
-message("Environment variable PROJECT_VERSION_BUILD: $ENV{PROJECT_VERSION_BUILD}")
-
-
 include (CPack)
 
 enable_testing()
 
 add_test(test_version_valid test_main_cli)
+
+configure_file("${PROJECT_SOURCE_DIR}/bintray.json.in" "${PROJECT_BINARY_DIR}/bintray.json")
+
+message("CPACK_PACKAGE_VERSION: ${CPACK_PACKAGE_VERSION}")
+message("CPACK_PACKAGE_FILE_NAME: ${CPACK_PACKAGE_FILE_NAME}")
+message("CPACK_PACKAGE_NAME: ${CPACK_PACKAGE_NAME}")
+
