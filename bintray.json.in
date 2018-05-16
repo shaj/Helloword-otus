@@ -25,12 +25,14 @@
 
     "files":
     [
-        {"includePattern": "build/bin/(.*\.deb)", "uploadPattern": "pool/main/m/mypackage/$1",
-        "matrixParams": {
-            "deb_distribution": "trusty",
-            "deb_component": "main",
-            "deb_architecture": "amd64"}
-        }
+        {
+            "includePattern": "(.*\.deb)", 
+            "uploadPattern": "https://dl.bintray.com/andreyshaj/otuscpp/@CPACK_PACKAGE_NAME@/@CPACK_PACKAGE_VERSION@/$1",
+            "matrixParams": {
+                "deb_distribution": "trusty",
+                "deb_component": "main",
+                "deb_architecture": "amd64"}
+            }
     ],
     "publish": true
 }
