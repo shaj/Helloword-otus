@@ -1,3 +1,14 @@
+/**
+ * \file
+ * \brief Файл main.cpp Проверяет подключение библиотеки.
+ *
+ * 
+
+*/
+
+
+
+
 #include <iostream>
 #include "lib.h"
 

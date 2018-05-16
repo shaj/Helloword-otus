@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.2)
 
-project(helloworld VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
+set(PATCH_VERSION 1)
+if($ENV{TRAVIS_BUILD_NUMBER})
+  set(PATCH_VERSION $ENV{TRAVIS_BUILD_NUMBER})
+endif()
+
+
+project(helloworld VERSION 0.0.${PATCH_VERSION})
 
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
@@ -40,6 +46,15 @@ set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 
 set(CPACK_PACKAGE_CONTACT kolobrod2002@yandex.ru)
+
+set(ENV{PROJECT_VERSION_BUILD}
+  "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
+
+
+set(ENV{CT} "0.0.777" PARENT_SCOPE)
+message("Environment variable CT: $ENV{CT}")
+message("Environment variable PROJECT_VERSION_BUILD: $ENV{PROJECT_VERSION_BUILD}")
+
 
 include (CPack)
 
