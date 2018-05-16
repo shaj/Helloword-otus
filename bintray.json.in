@@ -1,8 +1,8 @@
 {
     "package": {
         "name": "@CPACK_PACKAGE_NAME@",
-        "repo": "master",
-        "subject": "myBintrayUser",
+        "repo": "otuscpp",
+        "subject": "andreyshaj",
         "desc": "I was pushed completely automatically",
         "website_url": "www.jfrog.com",
         "issue_tracker_url": "https://github.com/shaj/Helloworld-otus/issues",
