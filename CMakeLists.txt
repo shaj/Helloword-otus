@@ -1,23 +1,28 @@
 cmake_minimum_required(VERSION 3.2)
 
-set(PATCH_VERSION 1)
+set(PATCH_VERSION "0")
 if($ENV{TRAVIS_BUILD_NUMBER})
   set(PATCH_VERSION $ENV{TRAVIS_BUILD_NUMBER})
 endif()
 
 
-project(helloworld VERSION 0.0.${PATCH_VERSION})
+project(helloworld VERSION 0.5.${PATCH_VERSION})
 
+find_package (Threads)
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
-configure_file("${PROJECT_SOURCE_DIR}/version.h.in" "${PROJECT_SOURCE_DIR}/version.h")
-include_directories("${PROJECT_BINARY_DIR}")
+configure_file("${PROJECT_SOURCE_DIR}/version.h.in" "${PROJECT_BINARY_DIR}/version.h")
 
 add_executable(helloworld_cli main.cpp)
+target_include_directories(helloworld_cli PRIVATE "${PROJECT_SOURCE_DIR}")
+target_include_directories(helloworld_cli PRIVATE "${PROJECT_BINARY_DIR}")
 
 add_library(helloworld lib.cpp)
+target_include_directories(helloworld PRIVATE "${PROJECT_BINARY_DIR}")
 
 add_executable(test_main_cli test_main.cpp)
+target_include_directories(test_main_cli PRIVATE "${PROJECT_BINARY_DIR}")
+target_include_directories(test_main_cli PRIVATE ${Boost_INCLUDE_DIR})
 
 set_target_properties(helloworld_cli test_main_cli PROPERTIES
   CXX_STANDARD 14
@@ -27,10 +32,12 @@ set_target_properties(helloworld_cli test_main_cli PROPERTIES
 
 set_target_properties(test_main_cli PROPERTIES
   COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
-  INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
 )
 
-target_link_libraries(helloworld_cli helloworld)
+target_link_libraries(helloworld_cli 
+	helloworld
+	${CMAKE_THREAD_LIBS_INIT}
+)
 
 target_link_libraries(test_main_cli
   ${Boost_LIBRARIES}
