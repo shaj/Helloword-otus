@@ -6,7 +6,7 @@ if($ENV{TRAVIS_BUILD_NUMBER})
 endif()
 
 
-project(helloworld VERSION 0.5.${PATCH_VERSION})
+project(helloworld VERSION 0.6.${PATCH_VERSION})
 
 find_package (Threads)
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
