@@ -16,13 +16,17 @@ configure_file("${PROJECT_SOURCE_DIR}/version.h.in" "${PROJECT_BINARY_DIR}/versi
 add_executable(helloworld_cli main.cpp)
 target_include_directories(helloworld_cli PRIVATE "${PROJECT_SOURCE_DIR}")
 target_include_directories(helloworld_cli PRIVATE "${PROJECT_BINARY_DIR}")
+target_include_directories(helloworld_cli PRIVATE "${PROJECT_SOURCE_DIR}/spdlog/include")
+target_include_directories(helloworld_cli PRIVATE "${PROJECT_SOURCE_DIR}/rapidjson/include")
 
 add_library(helloworld lib.cpp)
 target_include_directories(helloworld PRIVATE "${PROJECT_BINARY_DIR}")
+target_include_directories(helloworld PRIVATE "${PROJECT_SOURCE_DIR}/spdlog/include")
 
 add_executable(test_main_cli test_main.cpp)
 target_include_directories(test_main_cli PRIVATE "${PROJECT_BINARY_DIR}")
 target_include_directories(test_main_cli PRIVATE ${Boost_INCLUDE_DIR})
+target_include_directories(test_main_cli PRIVATE "${PROJECT_SOURCE_DIR}/spdlog/include")
 
 set_target_properties(helloworld_cli test_main_cli PROPERTIES
   CXX_STANDARD 14

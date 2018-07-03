@@ -6,6 +6,7 @@ before_script:
   #- sudo apt-get install gcc-6 -y
   #- sudo apt-get install g++-6 -y
   #- sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-6
+  - git submodule update --init --recursive
 script:
   - cmake .
   - cmake --build .

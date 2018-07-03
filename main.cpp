@@ -9,6 +9,10 @@
 
 #include "spdlog/spdlog.h"
 
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+
 #include <iostream>
 #include <memory>
 
@@ -18,7 +22,7 @@ void user_defined_example();
 void err_handler_example();
 
 namespace spd = spdlog;
-
+using namespace rapidjson;
 
 
 #include <iostream>
@@ -83,30 +87,50 @@ int main(int argc, char const *argv[])
 		std::cout << version_minor() << ".";
 		std::cout << version_patch() << std::endl;
 
-        // Asynchronous logging is very fast..
-        // Just call spdlog::set_async_mode(q_size) and all created loggers from now on will be asynchronous..
-        async_example();
+		// Asynchronous logging is very fast..
+		// Just call spdlog::set_async_mode(q_size) and all created loggers from now on will be asynchronous..
+		async_example();
 
-        // syslog example. linux/osx only
-        syslog_example();
+		// syslog example. linux/osx only
+		syslog_example();
 
-        // // android example. compile with NDK
-        // android_example();
+		// // android example. compile with NDK
+		// android_example();
 
-        // Log user-defined types example
-        user_defined_example();
+		// Log user-defined types example
+		user_defined_example();
 
-        // Change default log error handler
-        err_handler_example();
+		// Change default log error handler
+		err_handler_example();
 
-        // Apply a function on all registered loggers
-        spd::apply_all([&](std::shared_ptr<spd::logger> l)
-        {
-            l->info("End of example.");
-        });
+		// Apply a function on all registered loggers
+		spd::apply_all([&](std::shared_ptr<spd::logger> l)
+		{
+			l->info("End of example.");
+		});
 
-        // Release and close all loggers
-        spd::drop_all();
+
+		// 1. Parse a JSON string into DOM.
+		const char* json = "{\"project\":\"rapidjson\",\"stars\":10}";
+		Document d;
+		d.Parse(json);
+
+		// 2. Modify it by DOM.
+		Value& s = d["stars"];
+		s.SetInt(s.GetInt() + 1);
+
+		// 3. Stringify the DOM
+		StringBuffer buffer;
+		Writer<StringBuffer> writer(buffer);
+		d.Accept(writer);
+
+		// Output {"project":"rapidjson","stars":11}
+		std::cout << buffer.GetString() << std::endl;
+
+
+
+		// Release and close all loggers
+		spd::drop_all();
 	}
 	// Exceptions will only be thrown upon failed logger or sink construction (not during logging)
 	catch (const spd::spdlog_ex& ex)
