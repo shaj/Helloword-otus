@@ -5,6 +5,11 @@ if($ENV{TRAVIS_BUILD_NUMBER})
   set(PATCH_VERSION $ENV{TRAVIS_BUILD_NUMBER})
 endif()
 
+if( NOT CMAKE_BUILD_TYPE )
+  set( CMAKE_BUILD_TYPE MinSizeRel CACHE STRING
+       "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+       FORCE )
+endif()
 
 project(helloworld VERSION 0.6.${PATCH_VERSION})
 
@@ -18,6 +23,12 @@ target_include_directories(helloworld_cli PRIVATE "${PROJECT_SOURCE_DIR}")
 target_include_directories(helloworld_cli PRIVATE "${PROJECT_BINARY_DIR}")
 target_include_directories(helloworld_cli PRIVATE "${PROJECT_SOURCE_DIR}/spdlog/include")
 target_include_directories(helloworld_cli PRIVATE "${PROJECT_SOURCE_DIR}/rapidjson/include")
+
+
+if(${CMAKE_BUILD_TYPE} EQUAL "Debug")
+    target_compile_definitions(helloworld_cli PRIVATE SPDLOG_TRACE_ON)
+endif()
+
 
 add_library(helloworld lib.cpp)
 target_include_directories(helloworld PRIVATE "${PROJECT_BINARY_DIR}")
